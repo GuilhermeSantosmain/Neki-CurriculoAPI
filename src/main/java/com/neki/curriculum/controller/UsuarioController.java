@@ -44,10 +44,10 @@ public class UsuarioController {
 		}
 
 	}
-	@PostMapping("/adiciona/{idUsuario}")
-	public ResponseEntity<?> adicionaHabilidade(@PathVariable Long idUsuario,@RequestBody HabilidadeUsuarioDTO HUDTO) {
+	@PostMapping("/adiciona/{idHabilidade}")
+	public ResponseEntity<?> adicionaHabilidade(@PathVariable Long idHabilidade,@RequestBody UsuarioDTO dto) {
 		try {
-			return new ResponseEntity<>(usuarioService.adicionaHabilidade(idUsuario, HUDTO.getHabilidade().getId(), HUDTO.getNivel()), HttpStatus.OK);
+			return new ResponseEntity<>(usuarioService.adicionaHabilidade(idHabilidade, dto), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
@@ -62,10 +62,10 @@ public class UsuarioController {
 		}
 
 	}
-	@PutMapping("/editar/habilidade")
-	public ResponseEntity<?> editarHabilidade(@RequestBody HabilidadeUsuarioDTO dto) {
+	@PutMapping("/editar/habilidade/{nivel}")
+	public ResponseEntity<?> editarHabilidade(@PathVariable Integer nivel ,@RequestBody HabilidadeUsuarioDTO dto) {
 		try {
-			return new ResponseEntity<>(usuarioService.editarHabilidade(dto), HttpStatus.OK);
+			return new ResponseEntity<>(usuarioService.editarHabilidade(dto, nivel), HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}

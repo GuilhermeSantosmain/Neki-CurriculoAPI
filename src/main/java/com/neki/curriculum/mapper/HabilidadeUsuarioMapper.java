@@ -8,7 +8,7 @@ import com.neki.curriculum.entity.HabilidadeUsuarioEntity;
 
 @Component
 public class HabilidadeUsuarioMapper {
-	public HabilidadeUsuarioEntity toEntity(HabilidadeEntity habilidadeEntity, Integer nivel) {
+	public HabilidadeUsuarioEntity toEntity(HabilidadeEntity habilidadeEntity) {
 		HabilidadeUsuarioEntity entity = new HabilidadeUsuarioEntity();
 		
 		entity.setHabilidade(habilidadeEntity);

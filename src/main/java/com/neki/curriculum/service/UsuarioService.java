@@ -49,12 +49,12 @@ public class UsuarioService {
 
 		return usuarioRepository.findById(id).orElseThrow(() -> new EntityNotFoundException(id + " não encontrado."));
 	}
-	public UsuarioEntity adicionaHabilidade(Long idUsuario, Long idHabilidade, Integer nivel ) throws UsuarioException {
-		if(idUsuario == null || idHabilidade == null || nivel == null) {
+	public UsuarioEntity adicionaHabilidade(Long idHabilidade, UsuarioDTO dto) throws UsuarioException {
+		if(dto.getId() == null || idHabilidade == null) {
 			throw new UsuarioException("id habilidade e/ou id usuario são nulos");
 		}
 		
-		UsuarioEntity usuario = findById(idUsuario);
+		UsuarioEntity usuario = findById(dto.getId());
 		HabilidadeEntity habilidade = habilidadeService.findById(idHabilidade);
 		
 		
@@ -66,21 +66,21 @@ public class UsuarioService {
 					throw new UsuarioException("usuario ja contem a habilidade");
 			}
 		}
-		HabilidadeUsuarioEntity habilidadeUsuario = habilidadeUsuarioMapper.toEntity(habilidade, nivel);
+		HabilidadeUsuarioEntity habilidadeUsuario = habilidadeUsuarioMapper.toEntity(habilidade);
 		habilidadeUsuarioRepository.save(habilidadeUsuario);
 		habilidades.add(habilidadeUsuario);
 		usuario.setHabilidades(habilidades);
 		
 		return usuarioRepository.save(usuario);
 	}
-	public HabilidadeUsuarioEntity editarHabilidade(HabilidadeUsuarioDTO dto ) throws UsuarioException {
-		if(dto.getId() == null || dto.getNivel() == null) {
+	public HabilidadeUsuarioEntity editarHabilidade(HabilidadeUsuarioDTO dto, Integer nivel ) throws UsuarioException {
+		if(dto.getId() == null || nivel == null) {
 			throw new UsuarioException("id habilidade e/ou id usuario são nulos");
 		}
 		
 		HabilidadeUsuarioEntity habilidade = habilidadeUsuarioService.findById(dto.getId());
 		
-		habilidade.setNivel(dto.getNivel());
+		habilidade.setNivel(nivel);
 		
 		return habilidadeUsuarioRepository.save(habilidade);
 	}
